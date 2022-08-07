@@ -13,9 +13,9 @@ string *string_initialize() {
   return s;
 }
 
-char *string_copy(char *dest, const char *src) {
+char *string_copy(string *dest, const char *src) {
   for (int i = 0;; i++) {
-    dest[i] = src[i];
+    dest->data[i] = src[i];
     if (!src[i]) {
       break;
     }
