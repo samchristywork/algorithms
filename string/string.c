@@ -13,6 +13,13 @@ string *string_initialize() {
   return s;
 }
 
+void string_destroy(string *s) {
+  if (s->data) {
+    free(s->data);
+  }
+  free(s);
+}
+
 char *string_copy(string *dest, const char *src) {
   for (int i = 0;; i++) {
     dest->data[i] = src[i];
@@ -43,4 +50,5 @@ int main() {
   string *s = string_initialize();
   string_set(s, "Hello, World!");
   puts(s->data);
+  string_destroy(s);
 }
