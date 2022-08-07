@@ -9,6 +9,14 @@ int compare(int a, int b) {
   return a < b;
 }
 
+int abs_compare(int a, int b) {
+  if (a < 0)
+    a *= -1;
+  if (b < 0)
+    b *= -1;
+  return a < b;
+}
+
 void quicksort(int *arr, int len, int (*compare)(int, int)) {
   if (len < 2) {
     return;
@@ -53,8 +61,8 @@ int main() {
   print_array(arr, len);
 
   quicksort(arr, len, compare);
-  for (int i = 0; i < len; i++) {
-    printf("%d ", arr[i]);
-  }
-  printf("\n");
+  print_array(arr, len);
+
+  quicksort(arr, len, abs_compare);
+  print_array(arr, len);
 }
