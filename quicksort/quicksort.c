@@ -4,9 +4,11 @@
  * Macro for swapping the value of two variables
  */
 #define SWAP(x, y) \
-  int t = x;       \
-  x = y;           \
-  y = t;
+  {                \
+    int t = x;     \
+    x = y;         \
+    y = t;         \
+  }
 
 /*
  * The canonical comparison function for two integers.
