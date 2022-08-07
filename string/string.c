@@ -39,11 +39,14 @@ size_t string_length(const char *s) {
   return len;
 }
 
-void string_set(string *s, char *str) {
+void string_set(string *s, const char *str) {
   int len = string_length(str);
-  s->data = malloc(len);
+  if (s->data) {
+    free(s->data);
+  }
+  s->data = malloc(len + 1);
   s->len = len;
-  string_copy(s->data, str);
+  string_copy(s, str);
 }
 
 int main() {
