@@ -38,15 +38,19 @@ void quicksort(int *arr, int len, int (*compare)(int, int)) {
   quicksort(arr + l, len - l, compare);
 }
 
+void print_array(int *arr, int len) {
+  for (int i = 0; i < len; i++) {
+    printf("%d ", arr[i]);
+  }
+  printf("\n");
+}
+
 int main() {
   int arr[] = {
       27, 71, 5, 8, 44, 38, -4, 33, 21, 18, 77, 33, -33, 20, 62, 5, 48, 77, 20, -83, 36, 18};
   int len = sizeof(arr) / sizeof(int);
 
-  for (int i = 0; i < len; i++) {
-    printf("%d ", arr[i]);
-  }
-  printf("\n");
+  print_array(arr, len);
 
   quicksort(arr, len, compare);
   for (int i = 0; i < len; i++) {
