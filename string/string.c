@@ -46,9 +46,28 @@ void string_set(string *s, const char *str) {
   string_copy(s, str);
 }
 
+int string_compare(const char *s1, const char *s2) {
+  for (int i = 0;; i++) {
+    char a = s1[i];
+    char b = s2[i];
+    if (a == b) {
+      if (a == 0) {
+        break;
+      }
+      continue;
+    }
+    if (a < b) {
+      return -1;
+    }
+    return 1;
+  }
+  return 0;
+}
+
 int main() {
   string *s = string_initialize();
   string_set(s, "Hello, World!");
   puts(s->data);
+  printf("%d\n", string_compare(s->data, "Hello, World"));
   string_destroy(s);
 }
