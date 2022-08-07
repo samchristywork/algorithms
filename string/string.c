@@ -3,13 +3,11 @@
 
 typedef struct string {
   char *data;
-  int len;
 } string;
 
 string *string_initialize() {
   string *s = malloc(sizeof(string));
   s->data = NULL;
-  s->len = 0;
   return s;
 }
 
@@ -45,7 +43,6 @@ void string_set(string *s, const char *str) {
     free(s->data);
   }
   s->data = malloc(len + 1);
-  s->len = len;
   string_copy(s, str);
 }
 
