@@ -32,14 +32,18 @@ void linked_list_append(linked_list *l, void *data) {
 /*
  * Print out the contents of a linked list.
  */
-void linked_list_print(linked_list_node *n, char *fmt) {
+void _linked_list_print(linked_list_node *n, char *fmt) {
   if (!n) {
     return;
   }
   int i;
   memcpy(&i, n->data, sizeof(int));
   printf(fmt, i);
-  linked_list_print(n->child, fmt);
+  _linked_list_print(n->child, fmt);
+}
+
+void linked_list_print(linked_list *l, char *fmt) {
+  _linked_list_print(l->head->child, fmt);
 }
 
 /*
@@ -75,7 +79,7 @@ int main() {
    * Add ten elements to the linked list.
    */
   for (int i = 0; i < 10; i++) {
-    int *d = malloc(sizeof(int));
+    void *d = malloc(sizeof(int));
     memcpy(d, &i, sizeof(int));
     linked_list_append(l, d);
   }
@@ -83,7 +87,7 @@ int main() {
   /*
    * Print out the linked list.
    */
-  linked_list_print(l->head->child, "%d\n");
+  linked_list_print(l, "%d\n");
 
   /*
    * Cleanup.
