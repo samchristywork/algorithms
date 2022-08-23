@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
  * The data structure that each element of the linked list consists of.
  */
 typedef struct linked_list_node {
-  int i;
+  void *data;
   struct linked_list_node *child;
 } linked_list_node;
 
@@ -20,10 +21,10 @@ typedef struct linked_list {
 /*
  * Add an element to the end of a linked list.
  */
-void linked_list_append(linked_list *l, int i) {
+void linked_list_append(linked_list *l, void *data) {
   linked_list_node *n = malloc(sizeof(linked_list_node));
   n->child = NULL;
-  n->i = i;
+  n->data = data;
   l->tail->child = n;
   l->tail = n;
 }
@@ -31,12 +32,14 @@ void linked_list_append(linked_list *l, int i) {
 /*
  * Print out the contents of a linked list.
  */
-void linked_list_print(linked_list_node *n) {
+void linked_list_print(linked_list_node *n, char *fmt) {
   if (!n) {
     return;
   }
-  printf("%d\n", n->i);
-  linked_list_print(n->child);
+  int i;
+  memcpy(&i, n->data, sizeof(int));
+  printf(fmt, i);
+  linked_list_print(n->child, fmt);
 }
 
 /*
@@ -47,6 +50,7 @@ void free_all(linked_list_node *n) {
     return;
   }
   free_all(n->child);
+  free(n->data);
   free(n);
 }
 
@@ -56,7 +60,7 @@ void free_all(linked_list_node *n) {
 linked_list *linked_list_init() {
   linked_list_node *n = malloc(sizeof(linked_list_node));
   n->child = NULL;
-  n->i = 0;
+  n->data = NULL;
   linked_list *l = malloc(sizeof(linked_list));
   l->head = n;
   l->tail = n;
@@ -71,13 +75,15 @@ int main() {
    * Add ten elements to the linked list.
    */
   for (int i = 0; i < 10; i++) {
-    linked_list_append(l, i);
+    int *d = malloc(sizeof(int));
+    memcpy(d, &i, sizeof(int));
+    linked_list_append(l, d);
   }
 
   /*
    * Print out the linked list.
    */
-  linked_list_print(l->head->child);
+  linked_list_print(l->head->child, "%d\n");
 
   /*
    * Cleanup.
