@@ -35,18 +35,25 @@ void free_all(linked_list_node *n) {
   free(n);
 }
 
-int main() {
+linked_list *linked_list_init(){
   linked_list_node *n = malloc(sizeof(linked_list_node));
   n->child = NULL;
   n->i = 0;
-  linked_list l;
-  l.head = n;
-  l.tail = n;
+  linked_list *l = malloc(sizeof(linked_list));
+  l->head = n;
+  l->tail = n;
+
+  return l;
+}
+
+int main() {
+  linked_list *l=linked_list_init();
+
   for (int i = 0; i < 10; i++) {
-    linked_list_append(&l, i);
+    linked_list_append(l, i);
   }
 
-  linked_list_print(l.head->child);
+  linked_list_print(l->head->child);
 
-  free_all(l.head);
+  free_all(l->head);
 }
