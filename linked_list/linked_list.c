@@ -58,6 +58,11 @@ void free_all(linked_list_node *n) {
   free(n);
 }
 
+void linked_list_free(linked_list *l) {
+  free_all(l->head);
+  free(l);
+}
+
 /*
  * Initialize a linked list struct.
  */
@@ -92,6 +97,5 @@ int main() {
   /*
    * Cleanup.
    */
-  free_all(l->head);
-  free(l);
+  linked_list_free(l);
 }
