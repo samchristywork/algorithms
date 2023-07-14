@@ -25,7 +25,9 @@ func _in_order_traversal(tree *Node, callback func(int, int), depth int) []int {
   }
 
   values = append(values, tree.Value)
-  callback(tree.Value, depth)
+  if callback != nil {
+    callback(tree.Value, depth)
+  }
 
   if tree.Right != nil {
     values = append(values, _in_order_traversal(tree.Right, callback, depth+1)...)
@@ -35,5 +37,9 @@ func _in_order_traversal(tree *Node, callback func(int, int), depth int) []int {
 }
 
 func in_order_traversal(tree *Node, callback func(int, int)) []int {
+  if tree == nil {
+    return []int{}
+  }
+
   return _in_order_traversal(tree, callback, 0)
 }
