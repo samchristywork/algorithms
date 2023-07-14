@@ -4,21 +4,21 @@ import (
   "fmt"
 )
 
-type Node struct {
-  Value int
-  Left *Node
-  Right *Node
+type Node[T interface{}] struct {
+  Value T
+  Left *Node[T]
+  Right *Node[T]
 }
 
-func print_element(value int, depth int) {
+func print_element[T any](value T, depth int) {
   for i := 0; i < depth; i++ {
     fmt.Print("  ")
   }
   fmt.Println(value)
 }
 
-func _in_order_traversal(tree *Node, callback func(int, int), depth int) []int {
-  var values []int
+func _in_order_traversal[T any](tree *Node[T], callback func(T, int), depth int) []T {
+  var values []T
 
   if tree.Left != nil {
     values = append(values, _in_order_traversal(tree.Left, callback, depth+1)...)
@@ -36,7 +36,7 @@ func _in_order_traversal(tree *Node, callback func(int, int), depth int) []int {
   return values
 }
 
-func in_order_traversal(tree *Node, callback func(int, int)) []int {
+func in_order_traversal(tree *Node[int], callback func(int, int)) []int {
   if tree == nil {
     return []int{}
   }
