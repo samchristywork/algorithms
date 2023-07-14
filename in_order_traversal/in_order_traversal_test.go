@@ -31,3 +31,41 @@ func TestGeneral(t *testing.T) {
     }
   }
 }
+
+func TestEmpty(t *testing.T) {
+  tree := &Node{Value: 1}
+
+  expected := []int{1}
+  actual := in_order_traversal(tree, print_element)
+
+  if len(expected) != len(actual) {
+    t.Errorf("Expected %v, got %v", expected, actual)
+  }
+
+  for i, v := range expected {
+    if v != actual[i] {
+      t.Errorf("Expected %v, got %v", expected, actual)
+    }
+  }
+}
+
+func TestLeftOnly(t *testing.T) {
+  tree := &Node{Value: 1}
+  tree.Left = &Node{Value: 2}
+  tree.Left.Left = &Node{Value: 3}
+  tree.Left.Left.Left = &Node{Value: 4}
+  tree.Left.Left.Left.Left = &Node{Value: 5}
+
+  expected := []int{5, 4, 3, 2, 1}
+  actual := in_order_traversal(tree, print_element)
+
+  if len(expected) != len(actual) {
+    t.Errorf("Expected %v, got %v", expected, actual)
+  }
+
+  for i, v := range expected {
+    if v != actual[i] {
+      t.Errorf("Expected %v, got %v", expected, actual)
+    }
+  }
+}
