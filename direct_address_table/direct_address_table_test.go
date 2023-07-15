@@ -117,3 +117,43 @@ func TestEmpty(t *testing.T) {
 		t.Errorf("Expected 0, got %d", length)
 	}
 }
+
+func DoubleInsert(t *testing.T) {
+	table := DirectAddressTable[float64]{}
+	table.Insert("foo", 1.0)
+	table.Insert("foo", 2.0)
+
+	foo := table.Find("foo")
+	if *foo != 2.0 {
+		t.Errorf("Expected 2.0, got %f", *foo)
+	}
+}
+
+func DeleteFailure(t *testing.T) {
+	table := DirectAddressTable[float64]{}
+	table.Insert("foo", 1.0)
+	table.Insert("bar", 2.0)
+
+	table.Delete("baz")
+}
+
+func EmptyKey(t *testing.T) {
+	table := DirectAddressTable[float64]{}
+	table.Insert("", 1.0)
+	table.Insert("bar", 2.0)
+
+	table.Delete("")
+}
+
+func TestUpdate(t *testing.T) {
+	table := DirectAddressTable[float64]{}
+	table.Insert("foo", 1.0)
+	table.Insert("bar", 2.0)
+
+	table.Update("foo", 3.0)
+
+	foo := table.Find("foo")
+	if *foo != 3.0 {
+		t.Errorf("Expected 3.0, got %f", *foo)
+	}
+}

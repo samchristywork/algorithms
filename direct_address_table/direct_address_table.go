@@ -1,7 +1,7 @@
 package main
 
 import (
-  "fmt"
+	"fmt"
 )
 
 const (
@@ -62,16 +62,16 @@ func (t *DirectAddressTable[T]) Find(key string) *T {
 }
 
 func (t *DirectAddressTable[T]) Update(key string, value T) {
-  hash := hashKey(key)
-  for i, element := range t.table[hash] {
-    if element.key == key {
-      t.table[hash][i].value = value
-    }
-  }
+	hash := hashKey(key)
+	for i, element := range t.table[hash] {
+		if element.key == key {
+			t.table[hash][i].value = value
+		}
+	}
 }
 
 func (t *DirectAddressTable[T]) Print() {
-  for i := 0; i < MAX_KEY; i++ {
-    fmt.Printf("%d: %v\n", i, t.table[i])
-  }
+	for i := 0; i < MAX_KEY; i++ {
+		fmt.Printf("%d: %v\n", i, t.table[i])
+	}
 }
