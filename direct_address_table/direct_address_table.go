@@ -1,5 +1,9 @@
 package main
 
+import (
+  "fmt"
+)
+
 const (
 	MAX_KEY = 10 // Very small for testing purposes
 )
@@ -55,4 +59,19 @@ func (t *DirectAddressTable[T]) Find(key string) *T {
 	}
 
 	return nil
+}
+
+func (t *DirectAddressTable[T]) Update(key string, value T) {
+  hash := hashKey(key)
+  for i, element := range t.table[hash] {
+    if element.key == key {
+      t.table[hash][i].value = value
+    }
+  }
+}
+
+func (t *DirectAddressTable[T]) Print() {
+  for i := 0; i < MAX_KEY; i++ {
+    fmt.Printf("%d: %v\n", i, t.table[i])
+  }
 }
