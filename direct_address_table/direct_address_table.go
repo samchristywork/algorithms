@@ -29,3 +29,30 @@ func hashKey(key string) int {
 func (t *DirectAddressTable[T]) Len() int {
 	return t.numElements
 }
+
+func (t *DirectAddressTable[T]) Insert(key string, value T) {
+	hash := hashKey(key)
+	t.table[hash] = append(t.table[hash], TableElement[T]{key, value})
+	t.numElements++
+}
+
+func (t *DirectAddressTable[T]) Delete(key string) {
+	hash := hashKey(key)
+	for i, element := range t.table[hash] {
+		if element.key == key {
+			t.table[hash] = append(t.table[hash][:i], t.table[hash][i+1:]...)
+			t.numElements--
+		}
+	}
+}
+
+func (t *DirectAddressTable[T]) Find(key string) *T {
+	hash := hashKey(key)
+	for _, element := range t.table[hash] {
+		if element.key == key {
+			return &element.value
+		}
+	}
+
+	return nil
+}
