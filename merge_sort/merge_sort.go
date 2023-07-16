@@ -1,7 +1,8 @@
 package main
 
-func merge(left []int, right []int) []int {
-	res := make([]int, len(left)+len(right))
+// Left and right are both sorted arrays
+func merge[T Ordered](left []T, right []T) []T {
+	res := make([]T, len(left)+len(right))
 
 	i := 0
 	for len(left) > 0 && len(right) > 0 {
@@ -34,7 +35,7 @@ func merge(left []int, right []int) []int {
 	return res
 }
 
-func merge_sort(data []int) []int {
+func merge_sort[T Ordered](data []T) []T {
 	data_len := len(data)
 
 	if data_len <= 1 {
