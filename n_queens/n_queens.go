@@ -117,10 +117,46 @@ func square_is_safe(board Board, row int, col int) bool {
 		diag_is_safe(board, row, col)
 }
 
+func _n_queens(board Board, col int) (bool, int) {
+	if col >= board.Width {
+		return true, 0
+	}
+
+	for i := 0; i < board.Height; i++ {
+		if square_is_safe(board, i, col) {
+			board.Board[i][col] = 1
+
+			foo, num_queens := _n_queens(board, col+1)
+			if foo {
+				return true, num_queens + 1
+			}
+
+			board.Board[i][col] = 0
+		}
+	}
+
+	return false, 0
+}
+
+func n_queens(board Board) int {
+	_, num_queens := _n_queens(board, 0)
+
+	return num_queens
+}
+
 func main() {
 	size := 8
 
 	board := Board{}
 
 	board.init_board(size)
+
+	board.display()
+
+	num_queens := n_queens(board)
+
+	fmt.Printf("Number of queens: %d\n", num_queens)
+	fmt.Println("")
+
+	board.display()
 }
