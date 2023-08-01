@@ -137,18 +137,10 @@ func tokenize[T any](s []T) []interface{} {
 }
 
 func main() {
-	rString := tokenizeString("The fat dog")
-	cString := tokenizeString("The great dog is here")
-	lcsString := lcs(rString, cString)
+	r := tokenizeString("The fat dog")
+	c := tokenizeString("The great dog is here")
+	lcs := lcs(r, c)
 
-	dString := diff(rString, cString, lcsString)
-	printDiff(dString)
-
-	rInt := tokenize([]int{1, 2, 3, 4, 5})
-	cInt := tokenize([]int{1, 3, 5, 7, 9})
-	lcsInt := lcs(rInt, cInt)
-
-	dInt := diff(rInt, cInt, lcsInt)
-	printDiff(dInt)
-
+	d := diff(r, c, lcs)
+	printDiff(d)
 }
