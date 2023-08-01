@@ -41,6 +41,38 @@ func lcs(r []string, c []string) [][]int {
 	return table
 }
 
+func diff(r []string, c []string, table [][]int) []token {
+	var output []token
+
+	i := len(r)
+	j := len(c)
+	for i > 0 && j > 0 {
+		if r[i-1] == c[j-1] {
+			output = append(output, token{unchanged, r[i-1]})
+			i--
+			j--
+		} else if table[i-1][j] > table[i][j-1] {
+			output = append(output, token{removed, r[i-1]})
+			i--
+		} else {
+			output = append(output, token{added, c[j-1]})
+			j--
+		}
+	}
+
+	for i > 0 {
+		output = append(output, token{removed, r[i-1]})
+		i--
+	}
+
+	for j > 0 {
+		output = append(output, token{added, c[j-1]})
+		j--
+	}
+
+	return output
+}
+
 func tokenizeString(s string) []string {
 	var output []string
 	var current string
@@ -64,5 +96,7 @@ func tokenizeString(s string) []string {
 func main() {
 	r := tokenizeString("The fat dog")
 	c := tokenizeString("The great dog is here")
-	lcs(r, c)
+	lcs := lcs(r, c)
+
+	diff(r, c, lcs)
 }
