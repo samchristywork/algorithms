@@ -15,6 +15,18 @@ type token struct {
 	val  string
 }
 
+func red() string {
+	return "\033[31m"
+}
+
+func green() string {
+	return "\033[32m"
+}
+
+func normal() string {
+	return "\033[0m"
+}
+
 func max(a, b int) int {
 	if a > b {
 		return a
@@ -73,6 +85,26 @@ func diff(r []string, c []string, table [][]int) []token {
 	return output
 }
 
+func printDiff(output []token) {
+	for i := len(output) - 1; i >= 0; i-- {
+		switch output[i].kind {
+		case unchanged:
+			fmt.Print(normal())
+		case added:
+			fmt.Print(green())
+		case removed:
+			fmt.Print(red())
+		}
+		fmt.Print(output[i].val)
+
+		if i > 0 {
+			fmt.Print(" ")
+		}
+	}
+
+	fmt.Println()
+}
+
 func tokenizeString(s string) []string {
 	var output []string
 	var current string
@@ -98,5 +130,6 @@ func main() {
 	c := tokenizeString("The great dog is here")
 	lcs := lcs(r, c)
 
-	diff(r, c, lcs)
+	d := diff(r, c, lcs)
+	printDiff(d)
 }
