@@ -41,8 +41,28 @@ func lcs(r []string, c []string) [][]int {
 	return table
 }
 
+func tokenizeString(s string) []string {
+	var output []string
+	var current string
+
+	for _, c := range s {
+		if c == ' ' {
+			output = append(output, current)
+			current = ""
+		} else {
+			current += string(c)
+		}
+	}
+
+	if current != "" {
+		output = append(output, current)
+	}
+
+	return output
+}
+
 func main() {
-	r := []string{"The", "fat", "dog"}
-	c := []string{"The", "great", "dog", "is", "here"}
+	r := tokenizeString("The fat dog")
+	c := tokenizeString("The great dog is here")
 	lcs(r, c)
 }
