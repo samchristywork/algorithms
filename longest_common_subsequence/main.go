@@ -99,6 +99,8 @@ func printDiff(output []token) {
 
 		if i > 0 {
 			fmt.Print(" ")
+		} else {
+			fmt.Print(normal())
 		}
 	}
 
