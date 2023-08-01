@@ -12,7 +12,7 @@ const (
 
 type token struct {
 	kind int
-	val  string
+	val  interface{}
 }
 
 func red() string {
@@ -34,7 +34,7 @@ func max(a, b int) int {
 	return b
 }
 
-func lcs(r []string, c []string) [][]int {
+func lcs(r []interface{}, c []interface{}) [][]int {
 	table := make([][]int, len(r)+1)
 	for i := range table {
 		table[i] = make([]int, len(c)+1)
@@ -53,7 +53,7 @@ func lcs(r []string, c []string) [][]int {
 	return table
 }
 
-func diff(r []string, c []string, table [][]int) []token {
+func diff(r []interface{}, c []interface{}, table [][]int) []token {
 	var output []token
 
 	i := len(r)
@@ -107,8 +107,8 @@ func printDiff(output []token) {
 	fmt.Println()
 }
 
-func tokenizeString(s string) []string {
-	var output []string
+func tokenizeString(s string) []interface{} {
+	var output []interface{}
 	var current string
 
 	for _, c := range s {
@@ -127,11 +127,28 @@ func tokenizeString(s string) []string {
 	return output
 }
 
-func main() {
-	r := tokenizeString("The fat dog")
-	c := tokenizeString("The great dog is here")
-	lcs := lcs(r, c)
+func tokenize[T any](s []T) []interface{} {
+	var output []interface{}
+	for _, p := range s {
+		output = append(output, p)
+	}
 
-	d := diff(r, c, lcs)
-	printDiff(d)
+	return output
+}
+
+func main() {
+	rString := tokenizeString("The fat dog")
+	cString := tokenizeString("The great dog is here")
+	lcsString := lcs(rString, cString)
+
+	dString := diff(rString, cString, lcsString)
+	printDiff(dString)
+
+	rInt := tokenize([]int{1, 2, 3, 4, 5})
+	cInt := tokenize([]int{1, 3, 5, 7, 9})
+	lcsInt := lcs(rInt, cInt)
+
+	dInt := diff(rInt, cInt, lcsInt)
+	printDiff(dInt)
+
 }
